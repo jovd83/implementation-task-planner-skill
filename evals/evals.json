@@ -1,0 +1,11 @@
+{
+  "skill_name": "implementation-task-planner-skill",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Turn this approved architecture plan and AC set into tasks.md. Mark parallel work and include test-first tasks.",
+      "expected_output": "Produces ordered implementation tasks with AC traceability, dependencies, parallel markers, validation commands, and skill-routing hints.",
+      "files": []
+    }
+  ]
+}
