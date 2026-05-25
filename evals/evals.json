@@ -1,11 +1,58 @@
 {
-  "skill_name": "implementation-task-planner-skill",
+  "skill_name": "implementation-task-planner",
   "evals": [
     {
-      "id": 1,
-      "prompt": "Turn this approved architecture plan and AC set into tasks.md. Mark parallel work and include test-first tasks.",
-      "expected_output": "Produces ordered implementation tasks with AC traceability, dependencies, parallel markers, validation commands, and skill-routing hints.",
-      "files": []
+      "id": "ready-vertical-slice",
+      "prompt": "Use $implementation-task-planner to create tasks.md and tasks.json for the saved-cart feature using evals/files/ready-product-spec.md and evals/files/ready-architecture.md. Mark safe parallel tasks and sequence tests first.",
+      "expected_output": "Produces tasks.md and tasks.json with source readiness 'ready', a first vertical slice, AC traceability, test-first tasks, dependency rationale, safe [P] markers only after stable contracts, validation commands from the fixture, and skill-routing hints.",
+      "files": [
+        "evals/files/ready-product-spec.md",
+        "evals/files/ready-architecture.md"
+      ],
+      "assertions": [
+        "Includes AC-001, AC-002, and AC-003 traceability.",
+        "Does not mark API contract and generated-client tasks parallel with each other.",
+        "Uses npm test and npm run test:e2e because they are present in the source fixture.",
+        "Creates both Markdown and JSON artifacts when requested."
+      ]
+    },
+    {
+      "id": "partial-source-with-open-questions",
+      "prompt": "Use $implementation-task-planner to turn evals/files/partial-spec.md into an implementation task plan. The architecture is not final yet, but create anything that is safe to plan.",
+      "expected_output": "Classifies readiness as 'partial', creates only grounded discovery/scaffold/test-planning tasks, avoids invented file paths and commands, and lists blocking open questions for missing API, data, and validation decisions.",
+      "files": [
+        "evals/files/partial-spec.md"
+      ],
+      "assertions": [
+        "Open questions are separated from executable tasks.",
+        "Unknown commands are marked 'TBD after bootstrap'.",
+        "No fabricated implementation files are presented as certain."
+      ]
+    },
+    {
+      "id": "blocked-source",
+      "prompt": "Use $implementation-task-planner for this request: 'Build the analytics dashboard. You know what a dashboard needs.'",
+      "expected_output": "Classifies readiness as 'blocked' and returns a concise blocker report instead of inventing requirements, architecture, tasks, file paths, or validation commands.",
+      "files": [],
+      "assertions": [
+        "Does not produce a fake task list.",
+        "Names the missing source artifacts needed to plan safely.",
+        "Offers the smallest useful next planning step."
+      ]
+    },
+    {
+      "id": "existing-plan-update",
+      "prompt": "Use $implementation-task-planner to update the existing plan in evals/files/existing-tasks.md with the new AC in evals/files/new-accessibility-ac.md. Preserve unrelated tasks.",
+      "expected_output": "Updates only the relevant planning surface, adds accessibility validation tasks with traceability, preserves existing task IDs where possible, and does not rewrite unrelated phases.",
+      "files": [
+        "evals/files/existing-tasks.md",
+        "evals/files/new-accessibility-ac.md"
+      ],
+      "assertions": [
+        "Preserves unrelated task content.",
+        "Adds accessibility skill routing or validation.",
+        "Clearly identifies any new dependency created by the added AC."
+      ]
     }
   ]
 }
