@@ -167,7 +167,7 @@ Use memory deliberately and keep scopes separate:
 
 - Runtime memory: Maintain temporary reasoning, dependency notes, and source interpretations only for the current task-planning turn.
 - Project or skill memory: Persist stable project-local planning conventions only when the repository already has an explicit place for them, such as `docs/`, `specs/`, or a project task template.
-- Shared memory: Do not write cross-agent memory from this skill. If the user asks to preserve reusable planning conventions across projects, route that work to an external shared-memory capability and ask for explicit confirmation.
+- Shared memory: Do not write cross-agent memory from this skill. If the user asks to preserve reusable planning conventions across projects, record them in the agent's own memory (for example CLAUDE.md or AGENTS.md) after explicit confirmation.
 
 Never promote runtime assumptions into persistent project artifacts without labeling them as assumptions or confirming them through source material.
 
