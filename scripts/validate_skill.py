@@ -10,7 +10,8 @@ from pathlib import Path
 
 
 EXPECTED_NAME = "implementation-task-planner"
-EXPECTED_VERSION = "1.0.0"
+EXPECTED_VERSION = "1.1.0"
+SCHEMA_VERSION = "1.0.0"  # tasks.json data contract; changes independently of the skill version
 EXPECTED_REPOSITORY = "jovd83/implementation-task-planner"
 
 REQUIRED_FILES = [
@@ -81,7 +82,7 @@ def parse_frontmatter(text: str) -> tuple[dict[str, str], str | None]:
 
     metadata: dict[str, str] = {}
     for line in lines[1:end]:
-        if not line.strip():
+        if not line.strip() or line[0] in " \t":  # nested values (metadata) are not top-level keys
             continue
         match = re.match(r"^([A-Za-z_][A-Za-z0-9_-]*):\s*(.*)$", line)
         if not match:
@@ -104,8 +105,10 @@ def validate_skill_md(root: Path) -> list[str]:
         return [fail(error)]
 
     keys = set(metadata)
-    if keys != {"name", "description"}:
-        errors.append(fail("SKILL.md frontmatter must contain only name and description"))
+    required = {"name", "description"}
+    optional = {"metadata", "license", "compatibility", "allowed-tools", "disable-model-invocation", "context", "agent"}
+    if not required <= keys or keys - required - optional:
+        errors.append(fail(f"SKILL.md frontmatter needs {sorted(required)} and may add {sorted(optional)}"))
 
     name = metadata.get("name", "")
     description = metadata.get("description", "")
@@ -134,7 +137,7 @@ def validate_changelog(root: Path) -> list[str]:
     text = read_text(root / "CHANGELOG.md")
     required = [
         "# Changelog",
-        f"## [{EXPECTED_VERSION}] - 2026-05-25",
+        f"## [{EXPECTED_VERSION}] - ",
         "GitHub Actions",
     ]
     return [fail(f"CHANGELOG.md missing required content: {snippet}") for snippet in required if snippet not in text]
@@ -147,7 +150,7 @@ def validate_openai_yaml(root: Path) -> list[str]:
         'display_name: "Implementation Task Planner"',
         "short_description:",
         'default_prompt: "Use $implementation-task-planner',
-        "allow_implicit_invocation: true",
+        "allow_implicit_invocation: false",
     ]
     return [fail(f"agents/openai.yaml missing required content: {snippet}") for snippet in required if snippet not in text]
 
@@ -212,16 +215,16 @@ def validate_schema(root: Path) -> list[str]:
         return [fail(str(exc))]
 
     schema_id = str(schema.get("$id", ""))
-    if EXPECTED_VERSION not in schema_id:
-        errors.append(fail(f"tasks-json-schema.json $id must include {EXPECTED_VERSION}"))
+    if SCHEMA_VERSION not in schema_id:
+        errors.append(fail(f"tasks-json-schema.json $id must include {SCHEMA_VERSION}"))
 
     try:
         pattern = schema["properties"]["schema_version"]["pattern"]
     except (KeyError, TypeError):
         errors.append(fail("tasks-json-schema.json must constrain schema_version"))
     else:
-        if EXPECTED_VERSION.replace(".", r"\.") not in str(pattern):
-            errors.append(fail(f"tasks-json-schema.json schema_version must be {EXPECTED_VERSION}"))
+        if SCHEMA_VERSION.replace(".", r"\.") not in str(pattern):
+            errors.append(fail(f"tasks-json-schema.json schema_version must be {SCHEMA_VERSION}"))
 
     return errors
 

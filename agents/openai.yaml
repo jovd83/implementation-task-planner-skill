@@ -3,4 +3,4 @@ interface:
   short_description: "Build execution-ready implementation task plans"
   default_prompt: "Use $implementation-task-planner to turn the approved spec, acceptance criteria, and architecture plan into ordered implementation tasks."
 policy:
-  allow_implicit_invocation: true
+  allow_implicit_invocation: false

@@ -1,6 +1,10 @@
 ---
 name: implementation-task-planner
 description: Turn approved product requirements, acceptance criteria, architecture plans, and repository context into executable implementation task plans. Use when a project needs test-first, dependency-aware tasks with traceability, file targets, validation commands, parallel work markers, open questions, and downstream skill-routing before coding starts.
+disable-model-invocation: true
+metadata:
+  author: jovd83
+  version: "1.1.0"
 ---
 
 # Implementation Task Planner Skill
