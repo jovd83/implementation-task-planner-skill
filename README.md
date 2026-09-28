@@ -191,7 +191,7 @@ Avoid adding broad frameworks, autonomous self-modification, or persistent memor
 
 ## Changelog
 
-See [CHANGELOG.md](CHANGELOG.md) for release history. Current version: `1.0.0`.
+See [CHANGELOG.md](CHANGELOG.md) for release history. Current version: `1.1.0`.
 
 ## License
 
