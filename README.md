@@ -1,6 +1,6 @@
 # Implementation Task Planner Skill
 
-[![Validate Skill](https://github.com/jovd83/implementation-task-planner-skill/actions/workflows/validate.yml/badge.svg)](https://github.com/jovd83/implementation-task-planner-skill/actions/workflows/validate.yml)
+[![Validate Skill](https://github.com/jovd83/implementation-task-planner/actions/workflows/validate.yml/badge.svg)](https://github.com/jovd83/implementation-task-planner/actions/workflows/validate.yml)
 [![version](https://img.shields.io/badge/version-1.0.0-blue)](CHANGELOG.md)
 [![Agent Skill](https://img.shields.io/badge/Agent%20Skill-SKILL.md-0a7ea4)](SKILL.md)
 [![status](https://img.shields.io/badge/status-production--ready-brightgreen)](SKILL.md)
@@ -51,13 +51,13 @@ Use upstream product, acceptance-criteria, or architecture skills before this on
 Install from GitHub with `npx skills`:
 
 ```powershell
-npx skills install jovd83/implementation-task-planner-skill
+npx skills install jovd83/implementation-task-planner
 ```
 
 For older Skills CLI versions that use `add`:
 
 ```powershell
-npx skills add https://github.com/jovd83/implementation-task-planner-skill --skill implementation-task-planner
+npx skills add https://github.com/jovd83/implementation-task-planner --skill implementation-task-planner
 ```
 
 You can also copy this folder into any Agent Skills-compatible skills directory.

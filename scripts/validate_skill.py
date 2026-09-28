@@ -11,7 +11,7 @@ from pathlib import Path
 
 EXPECTED_NAME = "implementation-task-planner"
 EXPECTED_VERSION = "1.0.0"
-EXPECTED_REPOSITORY = "jovd83/implementation-task-planner-skill"
+EXPECTED_REPOSITORY = "jovd83/implementation-task-planner"
 
 REQUIRED_FILES = [
     "SKILL.md",
